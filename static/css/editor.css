@@ -18,13 +18,41 @@ a.red {
 	display: block;
 }
 
-.toggle {
+.top-button {
 	border: none;
 	outline: none;
 	background-color: transparent;
 	cursor: pointer;
-	margin: 30px;
+	font-size: 2em;
 }
+
+#settings {
+	float: right;
+	/*margin: 30px;
+	margin-right: 5px;*/
+}
+
+#close > i:hover {
+	color: #F44336;
+}
+
+#new > i:hover {
+	color: #64DD17;
+}
+
+#settings > i:hover {
+	color: #5c5c5c;
+}
+
+.toggle > i:hover {
+	color: #03A9F4;
+}
+
+.toggle {
+	margin: 30px;
+	margin-right: 5px;
+}
+
 .toggle .bar {
 	width: 27px;
 	margin: 3px;
@@ -43,6 +71,8 @@ nav {
 	-moz-transition: all 0.5s ease-in-out;
 	-o-transition: all 0.5s ease-in-out;
 	-ms-transition: all 0.5s ease-in-out;
+	white-space: nowrap;
+	display: block;
 }
 nav ul {
 	list-style-type: none;

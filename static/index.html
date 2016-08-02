@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+		<title>Abstract Editor</title>
+
+		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+		<script src="js/lib/jquery-3.1.0.min.js"></script>
+		<script src="js/lib/jquery.caret.min.js"></script>
+		<script src="js/lib/keymaster.js"></script>
+		<script src="js/lib/to-markdown.js"></script>
+		<script src="js/lib/showdown.min.js"></script>
+		<script src="js/misc.js"></script>
+		<script src="js/editor.js"></script>
+		<script>if (window.module) module = window.module;</script>
+
+		<link href="css/editor.css" rel="stylesheet">
+		<link href="css/font-awesome.min.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<main>
+			<div class='content'>
+				<button class='toggle top-button'>
+					<i class="fa fa-bars" aria-hidden="true"></i>
+				</button>
+				<button id="new" class='top-button'>
+					<i class="fa fa-plus" aria-hidden="true"></i>
+				</button>
+				<button id="close" class='top-button'>
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</button>
+				<button id="settings" class='top-button'>
+					<i class="fa fa-wrench" aria-hidden="true"></i>
+				</button>
+
+				<div id="pages">
+				</div>
+			</div>
+
+			<nav>
+				<ul id="nav-buttons">
+					<li><button id="open" class='special--button'><i class="fa fa-folder-open" aria-hidden="true"></i> Open</button></li>
+					<!-- <li><button class='page--button' page='document1'>Getting Started with Abstract Editor</button></li> -->
+				</ul>
+			</nav>
+		</main>
+	</body>
+</html>

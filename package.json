@@ -1,0 +1,22 @@
+{
+  "name": "abstract-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NickGeek/Abstract-Editor.git"
+  },
+  "author": "Nick Webster",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/NickGeek/Abstract-Editor/issues"
+  },
+  "homepage": "https://github.com/NickGeek/Abstract-Editor#readme",
+  "dependencies": {
+    "electron": "^1.3.1"
+  }
+}
