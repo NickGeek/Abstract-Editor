@@ -1,3 +1,4 @@
+var rendered = false;
 $(document).ready(function() {
 	var currentDocument = {
 		id: 0,
@@ -14,6 +15,7 @@ $(document).ready(function() {
 		tasklists: true,
 
 	});
+
 
 	var bring_nav = function() {
 		if ($('nav').css('display') === "none") {
@@ -83,13 +85,19 @@ $(document).ready(function() {
 			updateTitle();
 		});
 
-		// $('.section--text').off("keypress");
-		// $('.section--text').on("keypress", function(event) {
-		// 	var key = event.key;
-		// 	if (event.which === 13) key = "\n";
-		// 	if (key.length === 1 && key !== "\u0012") {
-		// 		currentDocument.text += key;
-		// 	}
+		$('.section--text').off("keypress");
+		$('.section--text').on("keypress", function(event) {
+			var key = event.key;
+			switch(key) {
+				case "#":
+					$('.section__open > .section--text').sendkeys("<h1>{selection}{mark}</h1>");
+					event.preventDefault();
+					break;
+			}
+			if (event.which === 13) {
+				$('.section__open > .section--text').sendkeys("<br>\n");
+			}
+		});
 
 		// 	if (event.which === 13) renderText(event, this);
 			
@@ -110,33 +118,84 @@ $(document).ready(function() {
 		// });
 		$('.section--text').off("input");
 		$('.section--text').on("input", function(event) {
-			currentDocument.text = $('.section__open > .section--text').text().replace("[\u0012]", "");
+			if (rendered) {
+				currentDocument.text = $('.section__open > .section--text').html();
+			}
+			else {
+				currentDocument.text = $('.section__open > .section--text').text();
+			}
 
 			//Save to local storage
 			workspace[currentDocument.id] = currentDocument;
 			localStorage.setItem("workspace", JSON.stringify(workspace));
 		});
 
-		$('.section--text').off("keypress");
-		$('.section--text').on("keypress", function(event) {
-			// if (event.which === 13) renderText(event, this);
-		});
+		// $('.section--text').off("keypress");
+		// $('.section--text').on("keypress", function(event) {
+		// 	// if (event.which === 13) renderText(event, this);
+		// });
 	}
 
 	function renderText() {
-		var raw = $('.section__open > .section--text').text();
-		var txt = $('<textarea />').html(raw).val();
-		$('.section__open > .section--text').html(converter.makeHtml(txt));
-		currentDocument.text = toMarkdown($('.section__open > .section--text').html());
-		var workspace = JSON.parse(localStorage.getItem("workspace"));
-		workspace[currentDocument.id] = currentDocument;
-		localStorage.setItem("workspace", JSON.stringify(workspace));
+		rendered = true;
+		// var lines = $('.section__open > .section--text').contents();
+		// if (lines.length > 0) {
+		// 	lines[0] = lines[0].data; //Fix because the first line isn't wrapped in a div
+		// }
+		// for (var i = 1; i < lines.length; i++) {
+		// 	var line = $(lines[i]).text();
+		// 	lines[i] = line;
+		// }
+		// console.log(lines)
+
+		//Get the current line
+		// var txt = $('.section__open > .section--text')[0].innerText;
+		// var pos = $('.section__open > .section--text').caret('pos');
+		// var lines = txt.split('\n');
+
+		// var currentLength = 0;
+		// for (var i = 0; i < lines.length; i++) {
+		// 	var line = lines[i];
+		// 	if (pos > currentLength && pos <= currentLength+line.length) {
+		// 		//Markdown the active line
+		// 		if (i > 0) {
+
+		// 			// console.log(converter.makeHtml(lines[i]));
+		// 		}
+		// 		else {
+
+		// 		}
+
+		// 		break;
+		// 	}
+		// 	currentLength += line.length;
+		// }
+		$('.section__open > .section--text').html($('.section__open > .section--text').text());
+		console.log($('.section__open > .section--text').html());
+
+
+		// currentDocument.text = $('.section__open > .section--text').html();
+		// var workspace = JSON.parse(localStorage.getItem("workspace"));
+		// workspace[currentDocument.id] = currentDocument;
+		// localStorage.setItem("workspace", JSON.stringify(workspace));
 	}
 
 	function unrenderText() {
-		var raw = toMarkdown($('.section__open > .section--text').html());
-		var txt = $('<textarea />').html(raw).val();
-		$('.section__open > .section--text').text(txt);
+		rendered = false;
+		var htmlLines = $('.section__open > .section--text').html().split("<br>");
+		var html = "";
+		console.log(htmlLines);
+		for (var i = 0; i < htmlLines.length; i++) {
+			var line = htmlLines[i];
+			html += line+"<br>\n";
+		}
+
+		$('.section__open > .section--text').text(html);
+
+		currentDocument.text = $('.section__open > .section--text').text();
+		var workspace = JSON.parse(localStorage.getItem("workspace"));
+		workspace[currentDocument.id] = currentDocument;
+		localStorage.setItem("workspace", JSON.stringify(workspace));
 	}
 
 	/** New Document */
@@ -211,7 +270,7 @@ $(document).ready(function() {
 		updateTitle();
 
 		textInput();
-		renderText();
+		// renderText();
 	}
 
 	/** Close Document Button */
